@@ -75,18 +75,40 @@ form.addEventListener('submit', (e) => {
   });
 
   if (!allValid) {
-    // Focus the first invalid field
     const firstInvalid = form.querySelector('.field-group.invalid input');
     if (firstInvalid) firstInvalid.focus();
     return;
   }
 
-  // Hide the form, show success
-  form.style.transition = 'opacity 200ms ease';
-  form.style.opacity = '0';
+  const btn = form.querySelector('.btn-primary');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
 
-  setTimeout(() => {
-    form.style.display = 'none';
-    successState.classList.add('visible');
-  }, 200);
+  const payload = {
+    fullName:    getField('fullName').value.trim(),
+    companyName: getField('companyName').value.trim(),
+    website:     getField('website').value.trim(),
+    email:       getField('email').value.trim(),
+    revenue:     getField('revenue').value.trim(),
+  };
+
+  fetch('https://script.google.com/macros/s/AKfycbxAESDc0GS8aJztfEv4r328Z8NC2Q4hPqoWzu_aprMDzl-rF9VXWVpTHFgW_N7hXaym/exec', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  })
+    .then((res) => res.json())
+    .then(() => {
+      form.style.transition = 'opacity 200ms ease';
+      form.style.opacity = '0';
+      setTimeout(() => {
+        form.style.display = 'none';
+        successState.classList.add('visible');
+      }, 200);
+    })
+    .catch(() => {
+      btn.textContent = 'Get in Touch';
+      btn.disabled = false;
+      const errEl = document.getElementById('submitError');
+      if (errEl) errEl.style.display = 'block';
+    });
 });

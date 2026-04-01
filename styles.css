@@ -213,6 +213,20 @@ input:focus {
   color: var(--color-muted);
 }
 
+.submit-error {
+  display: none;
+  margin-top: 10px;
+  font-size: 0.8125rem;
+  color: var(--color-error);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
 /* ── Success State ── */
 .success-state {
   display: none;
