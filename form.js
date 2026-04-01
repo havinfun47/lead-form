@@ -94,9 +94,9 @@ form.addEventListener('submit', (e) => {
 
   fetch('https://script.google.com/macros/s/AKfycbxAESDc0GS8aJztfEv4r328Z8NC2Q4hPqoWzu_aprMDzl-rF9VXWVpTHFgW_N7hXaym/exec', {
     method: 'POST',
+    mode: 'no-cors',
     body: JSON.stringify(payload),
   })
-    .then((res) => res.json())
     .then(() => {
       form.style.transition = 'opacity 200ms ease';
       form.style.opacity = '0';
