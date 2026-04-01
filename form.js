@@ -92,23 +92,18 @@ form.addEventListener('submit', (e) => {
     revenue:     getField('revenue').value.trim(),
   };
 
+  // Fire and forget — Apps Script redirects block response reading,
+  // but the data lands in the sheet regardless.
   fetch('https://script.google.com/macros/s/AKfycbxAESDc0GS8aJztfEv4r328Z8NC2Q4hPqoWzu_aprMDzl-rF9VXWVpTHFgW_N7hXaym/exec', {
     method: 'POST',
     mode: 'no-cors',
     body: JSON.stringify(payload),
-  })
-    .then(() => {
-      form.style.transition = 'opacity 200ms ease';
-      form.style.opacity = '0';
-      setTimeout(() => {
-        form.style.display = 'none';
-        successState.classList.add('visible');
-      }, 200);
-    })
-    .catch(() => {
-      btn.textContent = 'Get in Touch';
-      btn.disabled = false;
-      const errEl = document.getElementById('submitError');
-      if (errEl) errEl.style.display = 'block';
-    });
+  });
+
+  form.style.transition = 'opacity 200ms ease';
+  form.style.opacity = '0';
+  setTimeout(() => {
+    form.style.display = 'none';
+    successState.classList.add('visible');
+  }, 200);
 });
